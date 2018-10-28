@@ -1,0 +1,35 @@
+{
+	"name": "plex_format_util-dict",
+	"version": "0.1",
+	
+	"keywords": {
+		"delimiters": [
+			".",
+			"+",
+			"-",
+			"_",
+			" "
+			],
+		"word-blacklist": [
+			"hdtv",
+			"x264",
+			"i_c",
+			"complete",
+			"aac",
+			"720p",
+			"1080p",
+			"webrip",
+			"mulvacoded",
+			"dl",
+			"rarbg",
+			"avs",
+			"xvid",
+			"bluray",
+			"blu-ray",
+			"shaanig",
+			"yify",
+			"dvdrip",
+			"dvd"
+		]
+	}
+}

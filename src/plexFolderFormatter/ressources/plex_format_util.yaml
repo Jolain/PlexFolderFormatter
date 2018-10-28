@@ -1,0 +1,48 @@
+
+--- # Package Information
+name: Plex Content Formatter
+developper: dev_JP (
+description: >
+    Repairs the folder and file naming of a directory to match the
+    structure required by Plex Media Center. Can roughly figure out
+    the name of the serie/movie contained in a given directory.
+    
+    Sadly, currently only works on a movie or tv show library. :(
+    I'm a student and spare time is unfortunately rare. But eventually
+    supporting the sports, music and other libraries is planned for
+    this project.
+    
+    Example:
+        - Desc: Fix the formatting of a movie library with 2 movies.
+            ...\Movies\The.Incredibles.2004.1080p.BluRay.AC3.x264-XXXX.mkv
+            ...\Movies\Exodus.Gods.And.Kings.2014.TELESYNC.XViD.XXX.avi
+            
+        - Usage: plex_format_util --movie <plex_library_dir>\Movies\
+        
+        - Result: Renamed the incorrectly named movies.
+            ...\Movies\The Incredibles (2004).mkv
+            ...\Movies\Exodus Gods And Kings (2014).avi
+            
+    Example:
+        - Desc: Fix the formatting of a TV show library with 1 season.
+            ...\TV Shows\The.Big.Bang.Theory.Season.10.Complete.720p.WEB.x264-XXXX
+                \TV Shows\<snip>\The.Big.Bang.Theory.S10E01.The.Conjugal.Conjecture.720p.WEB.x264-[XXXX].mp4
+                \TV Shows\<snip>\The.Big.Bang.Theory.S10E02.The.Military.Miniaturization.720p.WEB.x264-[XXXX].mp4
+                ...
+                
+        - Usage: plex_format_util --serie <plex_library_dir>\TV Shows\
+        
+        - Result: Renamed the incorrectly named episodes and folders.
+            ...\TV Shows\The Big Bang Theory Season 10
+                \TV Shows\<snip>\The Big Bang Theory S10E01.mp4
+                \TV Shows\<snip>\The Big Bang Theory S10E02.mp4
+                
+    Note:
+        For help, or to see the list of available commands, type
+            "plex_format_util --help"
+
+--- # Paths
+include:
+    internal:
+        - \ressources\dictionary.json
+        
