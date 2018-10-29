@@ -7,10 +7,7 @@ class FormatEngine {
 
 
     // --- Members
-    private Controller inst;        // Link to the controller of this engine. Sends the commands to complete.
-    private boolean recursiveFlag;  // When set to true, will browse sub-folders as well.
-    private boolean verboseFlag;    // Displays detailed execution information when set to true.
-    private boolean forceFlag;      // Overrides the folder structure detection safe guard when set to true.
+    private Controller ctrl;        // Link to the controller of this engine. Sends the commands to complete.
 
     private String target;          // Target folder.
 
@@ -20,9 +17,9 @@ class FormatEngine {
     public FormatEngine(){}
 
     // Program constructor
-    protected FormatEngine(Controller ctr) {
+    protected FormatEngine(Controller ctrl) {
         // Save a link to our master.
-        this.inst = ctr;
+        this.ctrl = ctrl;
     }
 
     // --- Protected Methods
