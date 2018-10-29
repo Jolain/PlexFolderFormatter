@@ -1,5 +1,6 @@
 package plexFolderFormatter;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 import plexFolderFormatter.pathHandler.*;
@@ -34,6 +35,8 @@ public class Controller extends plexFolderFormatter.FormatEngine {
     protected boolean verboseFlag;    // Displays detailed execution information when set to true.
     protected boolean forceFlag;      // Overrides the folder structure detection safe guard when set to true.
     protected int op_mode;            // Can be 0:[NULL], 1:[Series], 2:[Movie]
+    protected String extensions[]     // Array of all the extensions to include in the search.
+            = {"avi","mp4","mkv","asf","mov","wmv"};
 
     // --- Constructors
 
@@ -90,20 +93,26 @@ public class Controller extends plexFolderFormatter.FormatEngine {
 
         // Keep track of which arguments we've processed.
         boolean flag = false;
-        boolean modifier = false;
         boolean target = false;
-
-        // Must not give more than 3 arguments.
-        if(numArgs > 4) {throw new InvalidArgumentException(args);}
 
         // Check if all the given arguments are valid.
         for (int i = 0; i < numArgs; i++) {
             // Check for a modifier "--XXXX"
-            if(args[i].toLowerCase().contains("--") && !modifier) {
-                modifier = true;
+            if(args[i].toLowerCase().contains("--")) {
+                boolean valid = false;
+                String mod = "";
+
                 temp = args[i].toLowerCase().substring(2); // Remove '--'.
 
-                switch(temp) {
+                // Check if the given modifier is valid.
+                for (String validModifier:MODIFIERS) {
+                    if(temp.matches( "(" + validModifier + ")(.)*")) {valid = true; mod = validModifier;break;}
+                }
+
+                // Throw an exception if we received an invalid argument.
+                if(!valid) { throw new IllegalArgumentException(temp); }
+
+                switch(mod) {
                     case "series": // Switch the operation mode to "Series".
                         this.op_mode = SERIES_MODE;
                         break;
@@ -112,7 +121,12 @@ public class Controller extends plexFolderFormatter.FormatEngine {
                         this.op_mode = MOVIE_MODE;
                         break;
 
-                    case "extension":
+                    case "extension": // Override the default extensions.
+                        String user_extensions[];
+
+                        // Extract and use the given extensions.
+                        user_extensions = temp.split(":")[1].split(",");
+                        this.extensions = user_extensions;
 
                     case "help": // Display the help page.
                         // Help function....................
@@ -161,12 +175,24 @@ public class Controller extends plexFolderFormatter.FormatEngine {
                 }
             }
             // Check for the target path.
-            else {
+            else if(!target){
                 target = true;
                 this.target = new Path(args[i].toLowerCase());
+            }
 
-
+            // Invalid arguments given.
+            else {
+                throw new IllegalArgumentException();
             }
         }
+    }
+
+    // addElement(String[], String) (String[]):
+    //      Adds a given element to a static array. Creates a new array with + 1 size
+    //      and returns this new array.
+    private String[] addElement(String[] targetArray, String element) {
+        String[] resultArray = Arrays.copyOf(targetArray, targetArray.length + 1);
+        resultArray[targetArray.length] = element; // Add the element add the end.
+        return resultArray;
     }
 }
