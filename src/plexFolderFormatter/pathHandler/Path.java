@@ -7,6 +7,7 @@ public class Path {
 
     public Path() {
         // Nothing.
+
     }
 
     public Path(String path) {

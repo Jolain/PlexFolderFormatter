@@ -1,6 +1,5 @@
 package plexFolderFormatter;
 
-import java.util.logging.*;
 import com.sun.javaws.exceptions.*;
 
 public class Main extends plexFolderFormatter.Controller {
