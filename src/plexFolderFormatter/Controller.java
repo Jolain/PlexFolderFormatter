@@ -46,6 +46,7 @@ public class Controller extends plexFolderFormatter.FormatEngine {
         displayHelp();
 
     }
+
     // Console arguments constructor
     public Controller(String args[]) throws InvalidArgumentException {
         // Process the arguments given in the console.
@@ -76,8 +77,7 @@ public class Controller extends plexFolderFormatter.FormatEngine {
         String input;
         Scanner console;
 
-        // Open a stream from the console.
-        console = new Scanner(System.in);
+        console = new Scanner(System.in); // Open a stream from the console.
 
         System.out.println(message); // Display the prompt.
         input = console.nextLine(); // Grab the user input.
@@ -87,7 +87,7 @@ public class Controller extends plexFolderFormatter.FormatEngine {
     }
 
     // --- Private Methods
-    private void processParameters(String args[]) throws InvalidArgumentException {
+    private void processParameters(String args[]) throws IllegalArgumentException {
         int numArgs = args.length;
         String temp;
 
@@ -106,7 +106,7 @@ public class Controller extends plexFolderFormatter.FormatEngine {
 
                 // Check if the given modifier is valid.
                 for (String validModifier:MODIFIERS) {
-                    if(temp.matches( "(" + validModifier + ")(.)*")) {valid = true; mod = validModifier;break;}
+                    if(temp.matches( "(" + validModifier + ")(.)*")) {valid = true; mod = validModifier; break;}
                 }
 
                 // Throw an exception if we received an invalid argument.
@@ -133,8 +133,10 @@ public class Controller extends plexFolderFormatter.FormatEngine {
                         break;
 
                     case "revert": // Reverts the changes made by this program.
+                        // Revert function..........
+                        break;
 
-                    default: // Did not match any active modifier; illegal argument given.
+                    default: // Did not match any active modifier; invalid argument given.
                         throw new IllegalArgumentException(temp);
                 }
             }
@@ -174,7 +176,8 @@ public class Controller extends plexFolderFormatter.FormatEngine {
                     j++;
                 }
             }
-            // Check for the target path.
+
+            // The param given is the target folder if there's no (- | --) prefix.
             else if(!target){
                 target = true;
                 this.target = new Path(args[i].toLowerCase());
