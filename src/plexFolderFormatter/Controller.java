@@ -2,17 +2,16 @@ package plexFolderFormatter;
 
 import java.util.Arrays;
 import java.util.Scanner;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import plexFolderFormatter.pathHandler.*;
 
 public class Controller extends plexFolderFormatter.FormatEngine {
 
     // --- Constants declaration
-    public static int SERIES_MODE = 1;
-    public static int MOVIE_MODE = 2;
+    private static int SERIES_MODE = 1;
+    private static int MOVIE_MODE = 2;
 
     // Array of all the valid program modifiers/functions.
-    public static String MODIFIERS[] = {
+    private static String MODIFIERS[] = {
             "help",
             "series",
             "movie",
@@ -21,52 +20,46 @@ public class Controller extends plexFolderFormatter.FormatEngine {
     };
 
     // Array of all the valid program flags.
-    public static String FLAGS[] = {
+     private static String FLAGS[] = {
             "v",
             "f",
             "r"
     };
 
     // --- Members
-    // *** Declared as protected to allow the engine to see their value.
-    protected Path target;            // Target folder structure.
-    protected FormatEngine engine;    // Store a link to our slave.
-    protected boolean recursiveFlag;  // When set to true, will browse sub-folders as well.
-    protected boolean verboseFlag;    // Displays detailed execution information when set to true.
-    protected boolean forceFlag;      // Overrides the folder structure detection safe guard when set to true.
-    protected int op_mode;            // Can be 0:[NULL], 1:[Series], 2:[Movie]
-    protected String extensions[]     // Array of all the extensions to include in the search.
+    Path target;            // Target folder structure.
+    FormatEngine engine;    // Store a link to our slave.
+    boolean recursiveFlag;  // When set to true, will browse sub-folders as well.
+    boolean verboseFlag;    // Displays detailed execution information when set to true.
+    boolean forceFlag;      // Overrides the folder structure detection safe guard when set to true.
+    int op_mode;            // Can be 0:[NULL], 1:[Series], 2:[Movie]
+    String extensions[]     // Array of all the extensions to include in the search.
             = {"avi","mp4","mkv","asf","mov","wmv"};
 
     // --- Constructors
 
     // Default execution.
-    public Controller() {
+    Controller() {
         // Display information about the program.
-        displayHelp();
-
+        help();
     }
 
     // Console arguments constructor
-    public Controller(String args[]) throws InvalidArgumentException {
+    Controller(String args[]) throws IllegalArgumentException {
+        // If no arguments are given, display the program help.
+        if(args.length == 0) { help(); }
+
         // Process the arguments given in the console.
         processParameters(args);
 
         // Create a new instance of the processing engine.
         this.engine = new FormatEngine(this);
-
-    }
-
-    // --- Public Methods
-
-    public void displayHelp() {
-        // Output the documentation.
     }
 
     // help() (void):
     //      Prints to the console a list of available commands, their syntax as well as example uses.
     //      Called when the "--help" modifier is given as parameter.
-    public void help() {
+    private void help() {
         // TODO: Print the documentation.
     }
 
@@ -148,7 +141,6 @@ public class Controller extends plexFolderFormatter.FormatEngine {
                 // Parse each char.
                 int j = 0;
                 char current;
-
                 while(j < temp.length()) {
                     current = temp.charAt(j);
 
