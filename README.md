@@ -28,4 +28,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Thanks to my tired ass that didn't feel like manually renaming 426 files.
+* Thanks to my lazy ass who didn't feel like manually renaming 426 files.
